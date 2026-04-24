@@ -20,4 +20,13 @@ export class ProductsController {
   productExample(obj) {
     console.log('From product example controller', obj);
   }
+
+  @EventPattern('products.Update')
+  updateProduct(productId: string) {
+    console.log(
+      'Event listened from products(controller) microservice',
+      productId,
+    );
+    return this.productsService.updateProduct(productId);
+  }
 }

@@ -12,6 +12,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         transport: Transport.TCP,
         options: { port: 3005 },
       },
+      {
+        name: MICROSERVICE_CLIENTS.PRODUCTS,
+        transport: Transport.REDIS,
+        options: { port: 6379 },
+      },
     ]),
   ],
   controllers: [OrdersController],

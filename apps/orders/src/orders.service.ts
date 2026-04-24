@@ -6,16 +6,20 @@ import { MICROSERVICE_CLIENTS } from 'apps/api-gateway/src/constants';
 export class OrdersService {
   constructor(
     @Inject(MICROSERVICE_CLIENTS.PAYMENTS) private paymentClient: ClientProxy,
+    @Inject(MICROSERVICE_CLIENTS.PRODUCTS) private productsClient: ClientProxy,
   ) {}
+
   getHello(): string {
     return 'Hello World!';
   }
 
-  createOrder(orderId: string) {
-    this.paymentClient.emit('payments.Create', { orderId });
-    console.log('Order ID emitted to the payment micro-service');
+  createOrder(data: { orderId: string; productId: string }) {
+    this.paymentClient.emit('payments.Create', data.orderId);
+    this.productsClient.emit('products.Update', data.productId);
+    console.log('Order ID emitted to the payment and product micro-service');
     return {
-      orderId: `${JSON.stringify(orderId)}`,
+      orderId: `${data.orderId}`,
+      productId: data.productId,
       message: 'order successful',
     };
   }

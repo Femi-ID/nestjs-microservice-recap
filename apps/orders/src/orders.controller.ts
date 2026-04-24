@@ -12,7 +12,7 @@ export class OrdersController {
   }
 
   @MessagePattern('orders.Create')
-  createOrder(orderId: string) {
-    return this.ordersService.createOrder(orderId);
+  createOrder(data: { orderId: string; productId: string }) {
+    return this.ordersService.createOrder(data);
   }
 }

@@ -8,8 +8,13 @@ export class OrdersService {
   constructor(
     @Inject(MICROSERVICE_CLIENTS.ORDERS) private ordersClient: ClientProxy,
   ) {}
-  createOrder(orderId: string) {
+  createOrder(orderId: string, productId: string) {
     console.log(`from order gateway service- order id: ${orderId}`);
-    return firstValueFrom(this.ordersClient.send('orders.Create', { orderId }));
+    return firstValueFrom(
+      this.ordersClient.send('orders.Create', {
+        orderId: orderId,
+        productId: productId,
+      }),
+    );
   }
 }
